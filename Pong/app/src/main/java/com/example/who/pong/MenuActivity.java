@@ -2,12 +2,50 @@ package com.example.who.pong;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class MenuActivity extends AppCompatActivity {
+
+    private TextView mTitleText;
+    private TextView mHighscoreText;
+    private Button mPongButton;
+    private Button mBreakoutButton;
+    private Button mEditNameButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+
+        mTitleText = (TextView)findViewById(R.id.text_title);
+
+        mHighscoreText = (TextView)findViewById(R.id.text_highscore);
+
+        mPongButton = (Button)findViewById(R.id.button_pong);
+        mPongButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MenuActivity.this, R.string.coming_soon, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        mBreakoutButton = (Button)findViewById(R.id.button_breakout);
+        mBreakoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MenuActivity.this, R.string.coming_soon, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        mEditNameButton = (Button)findViewById(R.id.button_edit_name);
+        mEditNameButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MenuActivity.this, R.string.coming_soon, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
