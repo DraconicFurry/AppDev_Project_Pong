@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">Pong</string>
     <string name="coming_soon">This feature is coming soon!</string>
+    <string name="main_title">Welcome Back!</string>
+    <string name="high_score">score_value</string>
+    <string name="play_pong">Pong</string>
+    <string name="play_breakout">Breakout</string>
+    <string name="edit_name">Edit</string>
+
+
 </resources>
