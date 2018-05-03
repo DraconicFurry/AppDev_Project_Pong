@@ -1,5 +1,10 @@
 package com.example.who.pong;
 
+import android.graphics.RectF;
+import android.graphics.Point;
+import android.os.Bundle;
+import android.view.Display;
+
 class PongView extends SurfaceView implements Runnable {
 
     Thread mGameThread;
@@ -93,9 +98,62 @@ class PongView extends SurfaceView implements Runnable {
     }
 
     public void resume() {
+        mPlaying = true;
+        mGameThread = new Thread(this);
+        mGameThread.start();
     }
 
     public void pause() {
+        mPlaying = false;
+        try {
+            mGameThread.join();
+        } catch (InterruptedException e) {
+            Log.e("Error:", "joining thread");
+        }
+    }
+
+    public void update() {
+        mBat.update(mFPS);
+        mBall.update(mFPS);
+        if(RectF.intersects(mBat.getRect(), mBall.getRect())) {
+            mBall.setRandomXVelocity();
+            mBall.reverseYVelocity();
+            mBall.clearObstacleY(mBat.getRect().top - 2);
+
+            mScore++;
+            mBall.increaseVelocity();
+
+            mSoundPool.play(beep1, 1, 1, 0, 0, 1);
+        }
+        if(mBall.getRect().bottom > mScreenY){
+            mBall.reverseYVelocity();
+            mBall.clearObstacleY(mScreenY - 2);
+            mLives--;
+            mSoundPool.play(loseLife, 1, 1, 0, 0, 1);
+
+            if(mLives == 0){
+                mPaused = true;
+                setupAndRestart();
+            }
+        }
+        if(mBall.getRect().top < 0){
+            mBall.reverseYVelocity();
+            mBall.clearObstacleY(12);
+
+            mSoundPool.play(beep2, 1, 1, 0, 0, 1);
+        }
+        if(mBall.getRect().left < 0){
+            mBall.reverseXVelocity();
+            mBall.clearObstacleX(2);
+
+            sp.play(beep3, 1, 1, 0, 0, 1);
+        }
+        if(mBall.getRect().right > mScreenX){
+            mBall.reverseXVelocity();
+            mBall.clearObstacleX(mScreenX - 22);
+
+            mSoundPool.play(beep3, 1, 1, 0, 0, 1);
+        }
     }
 
     public void setupAndRestart(){
@@ -103,6 +161,21 @@ class PongView extends SurfaceView implements Runnable {
         if(mLives == 0) {
             mScore = 0;
             mLives = 3;
+        }
+    }
+
+    public void draw() {
+        if (mSurfaceHolder.getSurface().isValid()) {
+            mCanvas = mOurHolder.lockCanvas();
+            mCanvas.drawColor(Color.argb(255, 0, 0, 0));
+            mPaint.setColor(Color.argb(255, 255, 255, 255));
+            mCanvas.drawRect(mBat.getRect(), mPaint);
+            mCanvas.drawRect(mBall.getRect(), mPaint);
+            //mPaint.setColor(Color.argb(255, 255, 255, 255));
+            mPaint.setTextSize(40);
+            mCanvas.drawText("Score: " + mScore + "   Lives: " + mLives, 10, 50, mPaint);
+
+            mSurfaceHolder.unlockCanvasAndPost(mCanvas);
         }
     }
 }
