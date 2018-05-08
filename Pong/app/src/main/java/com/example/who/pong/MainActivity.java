@@ -3,9 +3,10 @@ package com.example.who.pong;
 import android.graphics.Point;
 import android.os.Bundle;
 
+import android.support.v7.app.AppCompatActivity;
 import android.view.Display;
 
-public class MainActivity extends MenuActivity{
+public class MainActivity extends AppCompatActivity {
     PongView pongView;
 
     @Override
@@ -15,6 +16,7 @@ public class MainActivity extends MenuActivity{
         Point size = new Point();
         display.getSize(size);
         pongView = new PongView(this, size.x, size.y);
+        pongView.run();
         setContentView(pongView);
 
     }

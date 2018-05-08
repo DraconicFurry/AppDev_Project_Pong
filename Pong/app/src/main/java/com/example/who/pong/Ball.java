@@ -21,7 +21,7 @@ public class Ball {
         mRect = new RectF();
     }
 
-    public RectF getRectF() {
+    public RectF getRect() {
         return mRect;
     }
 
@@ -40,7 +40,7 @@ public class Ball {
         mXVelocity = mXVelocity;
     }
 
-    public void setRandomVelocity() {
+    public void setRandomXVelocity() {
         Random rand = new Random();
         int answer = rand.nextInt(2);
         if (answer == 0) {

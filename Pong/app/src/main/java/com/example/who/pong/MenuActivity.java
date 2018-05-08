@@ -1,5 +1,6 @@
 package com.example.who.pong;
 
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -30,7 +31,11 @@ public class MenuActivity extends AppCompatActivity {
         mPongButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MenuActivity.this, R.string.coming_soon, Toast.LENGTH_SHORT).show();
+               // Toast.makeText(MenuActivity.this, R.string.coming_soon, Toast.LENGTH_SHORT).show();
+                //Intent intent = new Intent(v.getContext(), MainActivity.class);
+                startActivity(new Intent(MenuActivity.this,MainActivity.class));
+
+               // startActivity(intent);
             }
         });
 

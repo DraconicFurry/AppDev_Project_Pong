@@ -1,16 +1,30 @@
 package com.example.who.pong;
 
+import android.content.Context;
+import android.content.res.AssetFileDescriptor;
+import android.content.res.AssetManager;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.Point;
+import android.media.AudioAttributes;
+import android.media.AudioManager;
+import android.media.SoundPool;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Display;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
+import java.io.IOException;
 
 class PongView extends SurfaceView implements Runnable {
 
-    Thread mGameThread;
+    Thread mGameThread = null;
     SurfaceHolder mSurfaceHolder;
     volatile boolean mPlaying;
-    boolean mPaused;
+    boolean mPaused = true;
     Paint mPaint;
     Canvas mCanvas;
     long mFPS;
@@ -23,6 +37,7 @@ class PongView extends SurfaceView implements Runnable {
     int beep2;
     int beep3;
     int loseLife;
+    int explode;
     int mScore;
     int mLives;
 
@@ -43,13 +58,13 @@ class PongView extends SurfaceView implements Runnable {
                     .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
                     .build();
 
-            sp = new SoundPool.Builder()
+            mSoundPool = new SoundPool.Builder()
                     .setMaxStreams(5)
                     .setAudioAttributes(audioAttributes)
                     .build();
 
         } else {
-            sp = new SoundPool(5, AudioManager.STREAM_MUSIC, 0);
+            mSoundPool = new SoundPool(5, AudioManager.STREAM_MUSIC, 0);
         }
 
         try {
@@ -57,19 +72,19 @@ class PongView extends SurfaceView implements Runnable {
             AssetFileDescriptor descriptor;
 
             descriptor = assetManager.openFd("beep1.ogg");
-            beep1ID = sp.load(descriptor, 0);
+            beep1 = mSoundPool.load(descriptor, 0);
 
             descriptor = assetManager.openFd("beep2.ogg");
-            beep2ID = sp.load(descriptor, 0);
+            beep2 = mSoundPool.load(descriptor, 0);
 
             descriptor = assetManager.openFd("beep3.ogg");
-            beep3ID = sp.load(descriptor, 0);
+            beep3 = mSoundPool.load(descriptor, 0);
 
             descriptor = assetManager.openFd("loseLife.ogg");
-            loseLifeID = sp.load(descriptor, 0);
+            loseLife = mSoundPool.load(descriptor, 0);
 
             descriptor = assetManager.openFd("explode.ogg");
-            explodeID = sp.load(descriptor, 0);
+            explode = mSoundPool.load(descriptor, 0);
 
         } catch(IOException e){
             // Print an error message to the console
@@ -146,7 +161,7 @@ class PongView extends SurfaceView implements Runnable {
             mBall.reverseXVelocity();
             mBall.clearObstacleX(2);
 
-            sp.play(beep3, 1, 1, 0, 0, 1);
+            mSoundPool.play(beep3, 1, 1, 0, 0, 1);
         }
         if(mBall.getRect().right > mScreenX){
             mBall.reverseXVelocity();
@@ -166,7 +181,7 @@ class PongView extends SurfaceView implements Runnable {
 
     public void draw() {
         if (mSurfaceHolder.getSurface().isValid()) {
-            mCanvas = mOurHolder.lockCanvas();
+            mCanvas = mSurfaceHolder.lockCanvas();
             mCanvas.drawColor(Color.argb(255, 0, 0, 0));
             mPaint.setColor(Color.argb(255, 255, 255, 255));
             mCanvas.drawRect(mBat.getRect(), mPaint);
