@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
 
         pongView = new PongView(this, displayMetrics.widthPixels, displayMetrics.heightPixels);
-        pongView.run();
+        //pongView.run();
         setContentView(pongView);
 
     }
