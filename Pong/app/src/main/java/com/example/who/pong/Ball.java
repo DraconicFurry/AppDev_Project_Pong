@@ -19,6 +19,10 @@ public class Ball {
         mXVelocity = mYVelocity;
 
         mRect = new RectF();
+        mRect.bottom = screenY / 2;
+        mRect.left = screenX / 2;
+        mRect.top = mRect.bottom + mBallHeight;
+        mRect.right = mRect.left + mBallWidth;
     }
 
     public RectF getRect() {

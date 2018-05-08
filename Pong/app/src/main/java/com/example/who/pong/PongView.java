@@ -15,6 +15,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import java.io.IOException;
@@ -192,5 +193,28 @@ class PongView extends SurfaceView implements Runnable {
 
             mSurfaceHolder.unlockCanvasAndPost(mCanvas);
         }
+    }
+    @Override
+    public boolean onTouchEvent(MotionEvent motionEvent) {
+
+        switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
+            case MotionEvent.ACTION_DOWN:
+
+                mPaused = false;
+                if(motionEvent.getX() > mScreenX / 2){
+                    mBat.setMovementState(mBat.RIGHT);
+                }
+                else{
+                    mBat.setMovementState(mBat.LEFT);
+                }
+
+                break;
+
+            case MotionEvent.ACTION_UP:
+
+                mBat.setMovementState(mBat.STOPPED);
+                break;
+        }
+        return true;
     }
 }

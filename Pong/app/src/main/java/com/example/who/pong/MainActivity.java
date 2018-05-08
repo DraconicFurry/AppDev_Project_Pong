@@ -4,6 +4,7 @@ import android.graphics.Point;
 import android.os.Bundle;
 
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
 import android.view.Display;
 
 public class MainActivity extends AppCompatActivity {
@@ -13,9 +14,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Display display = getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        pongView = new PongView(this, size.x, size.y);
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+
+        pongView = new PongView(this, displayMetrics.widthPixels, displayMetrics.heightPixels);
         pongView.run();
         setContentView(pongView);
 

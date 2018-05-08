@@ -36,7 +36,7 @@ public class Bat {
         return mRect;
     }
 
-    public void SetMovementState(int state) {
+    public void setMovementState(int state) {
         mBatMoving = state;
     }
 
