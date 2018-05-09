@@ -40,19 +40,24 @@ public class Bat {
         mBatMoving = state;
     }
 
-    public void update(long fps) {
+    public void update(long fps){
         if(mBatMoving == LEFT) {
             mXCoord = mXCoord - mBatSpeed / fps;
         }
-        if (mBatMoving == RIGHT) {
+
+        if(mBatMoving == RIGHT) {
             mXCoord = mXCoord + mBatSpeed / fps;
         }
-        if(mRect.left < 0){ mXCoord = 0; } if(mRect.right > mScreenX){
+
+        if(mRect.left < 0) {
+            mXCoord = 0;
+        }
+
+        if(mRect.right > mScreenX) {
             mXCoord = mScreenX - (mRect.right - mRect.left);
         }
+
         mRect.left = mXCoord;
         mRect.right = mXCoord + mLength;
-
-
     }
 }

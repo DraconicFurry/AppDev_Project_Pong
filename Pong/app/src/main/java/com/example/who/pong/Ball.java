@@ -37,11 +37,11 @@ public class Ball {
     }
 
     public void reverseYVelocity() {
-        mYVelocity = mYVelocity;
+        mYVelocity = -mYVelocity;
     }
 
     public void reverseXVelocity() {
-        mXVelocity = mXVelocity;
+        mXVelocity = -mXVelocity;
     }
 
     public void setRandomXVelocity() {
