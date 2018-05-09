@@ -27,7 +27,7 @@ public class Bat {
         mHeight = mScreenY / 25;
 
         mXCoord = mScreenX / 2;
-        mYCoord = mScreenY - 20;
+        mYCoord = mScreenY - 200;
         mRect = new RectF(mXCoord, mYCoord, mXCoord + mLength, mYCoord + mHeight);
         mBatSpeed = mScreenX;
     }
