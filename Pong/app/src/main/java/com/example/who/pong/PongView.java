@@ -41,6 +41,7 @@ class PongView extends SurfaceView implements Runnable {
     int explode;
     int mScore;
     int mLives;
+    int mHighscore;
 
     public PongView(Context context, int x, int y) {
         super(context);
@@ -137,6 +138,7 @@ class PongView extends SurfaceView implements Runnable {
             mBall.clearObstacleY(mBat.getRect().top - 2);
 
             mScore++;
+            if (mScore > mHighscore) {mHighscore = mScore};
             mBall.increaseVelocity();
 
             mSoundPool.play(beep1, 1, 1, 0, 0, 1);
