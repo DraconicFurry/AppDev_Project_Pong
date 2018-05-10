@@ -16,6 +16,10 @@ public class MenuActivity extends AppCompatActivity {
     private Button mPongButton;
     private Button mBreakoutButton;
     private Button mEditNameButton;
+    String mName;
+    int mHighscore;
+    final int RESULT_CODE_PONG = 0;
+    final int EXTRA_HIGHSCORE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +37,7 @@ public class MenuActivity extends AppCompatActivity {
             public void onClick(View v) {
                // Toast.makeText(MenuActivity.this, R.string.coming_soon, Toast.LENGTH_SHORT).show();
                 //Intent intent = new Intent(v.getContext(), MainActivity.class);
-                startActivity(new Intent(MenuActivity.this,MainActivity.class));
-
+                startActivityForResult(new Intent(MenuActivity.this,MainActivity.class), RESULT_CODE_PONG);
                // startActivity(intent);
             }
         });
@@ -54,5 +57,11 @@ public class MenuActivity extends AppCompatActivity {
                 Toast.makeText(MenuActivity.this, R.string.coming_soon, Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode = RESULT_OK && mHighscore < data.getExtra(EXTRA_HIGHSCORE)) {
+            mHighscore = data.getExtra(EXTRA_HIGHSCORE);
+        }
     }
 }

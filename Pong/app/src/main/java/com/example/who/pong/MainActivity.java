@@ -9,6 +9,8 @@ import android.view.Display;
 
 public class MainActivity extends AppCompatActivity {
     PongView pongView;
+    Intent intent;
+    final int EXTRA_HIGHSCORE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,7 +19,10 @@ public class MainActivity extends AppCompatActivity {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
 
-        pongView = new PongView(this, displayMetrics.widthPixels, displayMetrics.heightPixels);
+        intent = new Intent();
+        intent.setExtra(EXTRA_HIGHSCORE, 0);
+        setResult(RESULT_OK, intent);
+        pongView = new PongView(this, intent, displayMetrics.widthPixels, displayMetrics.heightPixels);
         //pongView.run();
         setContentView(pongView);
 

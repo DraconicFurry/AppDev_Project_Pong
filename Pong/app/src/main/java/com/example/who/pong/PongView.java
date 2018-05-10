@@ -42,8 +42,10 @@ class PongView extends SurfaceView implements Runnable {
     int mScore;
     int mLives;
     int mHighscore;
+    Intent intent;
+    final int EXTRA_HIGHSCORE = 1;
 
-    public PongView(Context context, int x, int y) {
+    public PongView(Context context, Intent i, int x, int y) {
         super(context);
         mScreenX = x;
         mScreenY = y;
@@ -53,6 +55,7 @@ class PongView extends SurfaceView implements Runnable {
         mBall = new Ball(x, y);
         mScore = 0;
         mLives = 3;
+        intent = i;
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             AudioAttributes audioAttributes = new AudioAttributes.Builder()
@@ -180,6 +183,8 @@ class PongView extends SurfaceView implements Runnable {
             mScore = 0;
             mLives = 3;
         }
+        intent.setExtra(EXTRA_HIGHSCORE, mHighscore);
+        setResult(RESULT_OK, intent);
     }
 
     public void draw() {
