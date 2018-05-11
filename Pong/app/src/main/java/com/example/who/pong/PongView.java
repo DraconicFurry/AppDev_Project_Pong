@@ -1,6 +1,7 @@
 package com.example.who.pong;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
 import android.graphics.Canvas;
@@ -19,6 +20,9 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import java.io.IOException;
+import android.app.Activity;
+
+import javax.xml.transform.Result;
 
 class PongView extends SurfaceView implements Runnable {
 
@@ -43,7 +47,6 @@ class PongView extends SurfaceView implements Runnable {
     int mLives;
     int mHighscore;
     Intent intent;
-    final int EXTRA_HIGHSCORE = 1;
 
     public PongView(Context context, Intent i, int x, int y) {
         super(context);
@@ -141,7 +144,7 @@ class PongView extends SurfaceView implements Runnable {
             mBall.clearObstacleY(mBat.getRect().top - 2);
 
             mScore++;
-            if (mScore > mHighscore) {mHighscore = mScore};
+            if (mScore > mHighscore) {mHighscore = mScore;}
             mBall.increaseVelocity();
 
             mSoundPool.play(beep1, 1, 1, 0, 0, 1);
@@ -183,8 +186,9 @@ class PongView extends SurfaceView implements Runnable {
             mScore = 0;
             mLives = 3;
         }
-        intent.setExtra(EXTRA_HIGHSCORE, mHighscore);
-        setResult(RESULT_OK, intent);
+        intent.putExtra("EXTRA_HIGHSCORE", mHighscore);
+        Activity ac = (Activity) getContext();
+        ac.setResult(Activity.RESULT_OK, intent);
     }
 
     public void draw() {

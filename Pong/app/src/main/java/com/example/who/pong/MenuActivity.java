@@ -1,5 +1,6 @@
 package com.example.who.pong;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.support.v7.app.AppCompatActivity;
@@ -19,7 +20,6 @@ public class MenuActivity extends AppCompatActivity {
     String mName;
     int mHighscore;
     final int RESULT_CODE_PONG = 0;
-    final int EXTRA_HIGHSCORE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +60,8 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode = RESULT_OK && mHighscore < data.getExtra(EXTRA_HIGHSCORE)) {
-            mHighscore = data.getExtra(EXTRA_HIGHSCORE);
+        if (resultCode == Activity.RESULT_OK && mHighscore < data.getIntExtra("EXTRA_HIGHSCORE", 0)) {
+            mHighscore = data.getIntExtra("EXTRA_HIGHSCORE", 0);
         }
     }
 }
