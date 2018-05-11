@@ -1,6 +1,7 @@
 package com.example.who.pong;
 
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
@@ -187,8 +188,7 @@ class PongView extends SurfaceView implements Runnable {
             mLives = 3;
         }
         intent.putExtra("EXTRA_HIGHSCORE", mHighscore);
-        Activity ac = (Activity) getContext();
-        ac.setResult(Activity.RESULT_OK, intent);
+        getActivity().setResult(Activity.RESULT_OK, intent);
     }
 
     public void draw() {
@@ -227,5 +227,16 @@ class PongView extends SurfaceView implements Runnable {
                 break;
         }
         return true;
+    }
+
+    private Activity getActivity() {
+        Context context = getContext();
+        while (context instanceof ContextWrapper) {
+            if (context instanceof Activity) {
+                return (Activity)context;
+            }
+            context = ((ContextWrapper)context).getBaseContext();
+        }
+        return null;
     }
 }
