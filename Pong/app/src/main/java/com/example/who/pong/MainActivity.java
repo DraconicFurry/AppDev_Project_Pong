@@ -19,10 +19,10 @@ public class MainActivity extends AppCompatActivity {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
 
-        intent = new Intent();
+        /*intent = new Intent();
         intent.putExtra("EXTRA_HIGHSCORE", 0);
-        setResult(RESULT_OK, intent);
-        pongView = new PongView(this, intent, displayMetrics.widthPixels, displayMetrics.heightPixels);
+        setResult(RESULT_OK, intent);*/
+        pongView = new PongView(this, displayMetrics.widthPixels, displayMetrics.heightPixels);
         //pongView.run();
         setContentView(pongView);
 
