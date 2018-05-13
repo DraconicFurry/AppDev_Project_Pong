@@ -30,9 +30,7 @@ public class MenuActivity extends AppCompatActivity {
         mTitleText = (TextView)findViewById(R.id.text_title);
 
         mHighscoreText = (TextView)findViewById(R.id.text_highscore);
-        mName = HighscorePreferences.getName(this);
-        mHighscore = HighscorePreferences.getScore(this);
-        mHighscoreText.setText(mName + ": " + mHighscore);
+        refreshText();
 
         mPongButton = (Button)findViewById(R.id.button_pong);
         mPongButton.setOnClickListener(new View.OnClickListener() {
@@ -57,12 +55,19 @@ public class MenuActivity extends AppCompatActivity {
         mEditNameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MenuActivity.this, R.string.coming_soon, Toast.LENGTH_SHORT).show();
+                EditNameDialog end = new EditNameDialog();
+                end.show(getSupportFragmentManager(), "edit_name_dialog");
+                refreshText();
             }
         });
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        refreshText();
+    }
+
+    public void refreshText() {
+        mName = HighscorePreferences.getName(this);
         mHighscore = HighscorePreferences.getScore(this);
         mHighscoreText.setText(mName + ": " + mHighscore);
     }
